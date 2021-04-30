@@ -4,24 +4,18 @@ public:
     vector<int> searchRange(vector<int> &nums, int target)
     {
 
-        if (!nums.size())
-            return vector<int>{-1, -1};
+        int n = nums.size();
+        vector<int> z{-1, -1};
+        vector<int> range(2);
 
-        int low;
-        int high;
+        range[0] = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
 
-        low = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+        if (range[0] >= n || nums[range[0]] != target)
+            return z;
 
-        if (low == nums.size() || nums[low] != target)
-            return vector<int>{-1, -1};
+        range[1] = upper_bound(nums.begin(), nums.end(), target) - nums.begin();
+        range[1]--;
 
-        high = low;
-
-        while (high < nums.size() && nums[high] == nums[low])
-        {
-            high++;
-        }
-
-        return vector<int>{low, high - 1};
+        return range;
     }
 };
